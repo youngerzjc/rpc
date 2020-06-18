@@ -1,34 +1,27 @@
-package org.jun.rpc.client;
+package org.jun.rpc.client.service;
 
-import org.jun.rpc.client.config.SpringConfig;
-import org.jun.rpc.client.proxy.RPCProxyClient;
-import org.jun.rpc.client.service.HelloController;
+import org.jun.rpc.client.annotation.DRPCReference;
 import org.jun.rpc.protocol.hello.HelloRequest;
 import org.jun.rpc.protocol.hello.HelloResponse;
 import org.jun.rpc.protocol.hello.IHelloService;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
 /**
- * @ClassName RPCClient
+ * @ClassName HelloController
  * @Description TODO
  * @Author Administrator
- * @Date 2019/12/8 16:27
+ * @Date 2019/12/8 22:14
  * @Version 1.0
  **/
-public class APPClient {
+@Controller
+public class HelloController {
 
-    public static void main(String[] args) {
+    @DRPCReference
+    private IHelloService helloService;
 
-        ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
-        ((AnnotationConfigApplicationContext) context).start();
-        HelloController helloController = context.getBean(HelloController.class);
-        helloController.doIt();
-
-       /* IHelloService helloService = RPCProxyClient.clientProxy(IHelloService.class);
-
+    public void doIt(){
         System.out.println("---------调用 method: hi---------");
         helloService.hi();
 
@@ -45,7 +38,6 @@ public class APPClient {
 
         System.out.println("---------调用 method: getUserList---------");
         List<HelloResponse> list = helloService.getUserList(new HelloRequest("xx"));
-        System.out.println(list);*/
-
+        System.out.println(list);
     }
 }

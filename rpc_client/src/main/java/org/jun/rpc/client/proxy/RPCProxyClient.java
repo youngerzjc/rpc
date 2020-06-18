@@ -1,5 +1,7 @@
 package org.jun.rpc.client.proxy;
 
+import org.jun.rpc.client.bean.DRPCReferenceObject;
+
 import java.lang.reflect.Proxy;
 
 /**
@@ -11,9 +13,9 @@ import java.lang.reflect.Proxy;
  **/
 public class RPCProxyClient {
 
-    public static <T> T clientProxy(Class<T> interfaces){
+    public static <T> T clientProxy(DRPCReferenceObject object){
 
 //        return (T)Proxy.newProxyInstance(clazz.getClassLoader(),clazz.getInterfaces(),new ProxyHandle());
-        return (T)Proxy.newProxyInstance(interfaces.getClassLoader(),new Class<?>[]{interfaces},new RemoteInvocationHandle());
+        return (T)Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),new Class<?>[]{object.getIface()},new RemoteInvocationHandle(object));
     }
 }

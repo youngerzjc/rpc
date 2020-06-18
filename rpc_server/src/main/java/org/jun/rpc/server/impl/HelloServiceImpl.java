@@ -3,6 +3,7 @@ package org.jun.rpc.server.impl;
 import org.jun.rpc.protocol.hello.HelloRequest;
 import org.jun.rpc.protocol.hello.HelloResponse;
 import org.jun.rpc.protocol.hello.IHelloService;
+import org.jun.rpc.server.annotation.DRPCService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
  * @Date 2019/12/8 17:46
  * @Version 1.0
  **/
+@DRPCService(value=IHelloService.class)
 public class HelloServiceImpl implements IHelloService {
 
     public void hi() {

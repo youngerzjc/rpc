@@ -1,9 +1,11 @@
 package org.jun.rpc.server;
 
-import org.jun.rpc.server.config.ServerConfig;
-import org.jun.rpc.server.impl.HelloServiceImpl;
+import org.jun.rpc.protocol.hello.IHelloService;
+import org.jun.rpc.server.config.SpringConfig;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import java.io.IOException;
+import java.util.Map;
 
 /**
  * @ClassName App
@@ -14,11 +16,14 @@ import java.io.IOException;
  **/
 public class AppServer {
     public static void main(String[] args) {
-        try {
-            ServerConfig.INSTANCE.register("org.jun.rpc.protocol.hello.IHelloService", new HelloServiceImpl());
-            new RPCServer().start();
-        } catch (IOException e) {
-            e.printStackTrace();
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(SpringConfig.class);
+        ((AnnotationConfigApplicationContext) applicationContext).start();
+
+        String[] beanDefinitionNames = applicationContext.getBeanDefinitionNames();
+        for(String beanDefin: beanDefinitionNames){
+            System.out.println(beanDefin);
         }
+//        IHelloService bean = applicationContext.getBean("HelloServiceImpl", IHelloService.class);
+//        bean.hi();
     }
 }
